@@ -1,0 +1,15 @@
+{
+  "name": "numerologia",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "./public/bower_components"
+  ],
+  "dependencies": {
+    "materialize": "^0.98.0"
+  }
+}
