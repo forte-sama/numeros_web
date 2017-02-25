@@ -17,7 +17,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <div id="container" class="col s12 m8 offset-m2 l8 offset-l2">
+        <div id="container" class="col s10 offset-s1 m6 offset-m3 l6 offset-l3">
         </div>
       </div>
     </div>
@@ -26,6 +26,19 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- materialize behaviour -->
     <script src="bower_components/materialize/dist/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDECS5Rr1z_O7Wu5jQi1E5Q8UCqd7Hy5pM",
+        authDomain: "numerologia-dominicana.firebaseapp.com",
+        databaseURL: "https://numerologia-dominicana.firebaseio.com",
+        storageBucket: "numerologia-dominicana.appspot.com",
+        messagingSenderId: "1034048893917"
+      };
+      firebase.initializeApp(config);
+    </script>
+
     <!-- app behaviour -->
     <script src="js/app.js"></script>
   </body>
