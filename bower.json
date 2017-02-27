@@ -10,6 +10,7 @@
     "./public/bower_components"
   ],
   "dependencies": {
-    "materialize": "^0.98.0"
+    "materialize": "^0.98.0",
+    "moment": "^2.17.1"
   }
 }
