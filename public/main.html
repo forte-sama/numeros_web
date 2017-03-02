@@ -25,10 +25,16 @@
             <div id="_3dias" class="col s12 m12 l12">
                 <form id="_3dias">
                     <div class="row">
-                        <div class="input-field col s6 m6 l3">
+                        <div class="input-field col s2 m2 l2">
+                            <label>Desde: </label>
+                        </div>
+                        <div class="input-field col s4 m4 l4">
                             <input type="date" name="fecha" class="validate">
                         </div>
-                        <div class="input-field col s6 m6 l3">
+                        <div class="input-field col s2 m2 l2">
+                            <label>Hasta: </label>
+                        </div>
+                        <div class="input-field col s4 m4 l4">
                             <input type="date" name="fecha" class="validate">
                         </div>
                     </div>            
@@ -65,6 +71,7 @@
 </div>
 
 <script>
+    moment().locale("es");
     var current = "tab_3dias";
 
     $(document).ready(function() {
@@ -76,20 +83,70 @@
         function submitNumeros3Dias() {
             // obtener valor de todos los inputs relevantes
             var ifechas = $("form#_3dias input[name=fecha]");
-            var fechas = [ifechas.get(0).value, ifechas.get(1).value];
+            var fechas = {
+                inicio: ifechas.get(0).value,
+                fin: ifechas.get(1).value
+            };
             var inumeros = $("form#_3dias input[type=number]");
             var numeros = [inumeros.get(0).value * 1,inumeros.get(1).value * 1,
                            inumeros.get(2).value * 1,inumeros.get(3).value * 1];
-            // validar fechas
+
+            // validar y transformar fechas a formato user friendly
+            var fechasValidas = true;
+            // fechas seran validas cuando la inicial sea antes que la final, y ambas sean fechas validas
+            fechasValidas     = moment(fechas.inicio).isBefore(moment(fechas.fin));
+            
+            if(fechasValidas) {
+                fechas.inicio = moment(fechas.inicio).format("dddd D, MMMM YYYY");
+                fechas.fin    = moment(fechas.fin).format("dddd D, MMMM YYYY");
+            }
+
             // validar numeros
-            // subirlos
-            db.ref("/_3dias").set({
-                desde: fechas[0],
-                hasta: fechas[1],
-                numeros: numeros
-            }).then(function() {
-                Materialize.toast("Se publicaron los nuevos numeros!", 5670);
+            var numerosValidos = true;
+            var arregloNumerosValidos = numeros.filter((n) => { return n >= 0 && n <= 99; });
+            var todosEstanEnRango = arregloNumerosValidos.length === numeros.length;
+            var conteoDeOcurrencias = [];
+            numeros.forEach((x) => {
+                if(conteoDeOcurrencias[x]) {
+                    conteoDeOcurrencias[x]++;
+                }
+                else {
+                    conteoDeOcurrencias[x] = 1;
+                }
             });
+            var numerosSeRepiten = conteoDeOcurrencias.find((x) => { return x > 1; }) != undefined;
+            // numeros seran validos cuando todos esten en el rango jugable y no hayan repetidos
+            numerosValidos = todosEstanEnRango && !numerosSeRepiten;
+
+            // subirlos
+            if(fechasValidas && numerosValidos) {
+                // subir nuevos datos a db
+                db.ref("/_3dias").set({
+                    desde: fechas.inicio,
+                    hasta: fechas.fin,
+                    numeros: numeros
+                }).then(function() {
+                    // nitificar a usuario
+                    Materialize.toast("Se publicaron los nuevos numeros!", 5670);
+                });
+            }
+            else {
+                // mostrar errores
+                Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
+                // errores de las fechas
+                if(!fechasValidas) {
+                    Materialize.toast("Las fechas no son validas.", 15431);
+                }
+                // errores de los numeros
+                if(!numerosValidos) {
+                    if(!todosEstanEnRango) {
+                        Materialize.toast("Algunos numeros se pasan del rango jugable.", 15431);                    
+                    }
+                    if(numerosSeRepiten) {
+                        Materialize.toast("Algunos numeros se repiten. (Campo vacio es 00)", 15431);                    
+                    }
+                }                
+            }
         }
 
         function submitBaseDelDia() {
@@ -109,7 +166,6 @@
             else if(current === "tab_base_dia") {
                 submitBaseDelDia();
             }
-            // notificar a usuario
         });
 
         // cambiar valor de tab actual siempre

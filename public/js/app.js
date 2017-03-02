@@ -13,7 +13,7 @@ function changeContainerTo(container, targetPage) {
                         container.load(targetPage, function() {
                             container.fadeToggle(250);
                         });
-                    })
+                    });
                 }, 1500);
             });
         });
