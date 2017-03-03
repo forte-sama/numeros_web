@@ -8,12 +8,12 @@ body {
     box-shadow: 0 1px 0 0 #000;
 }
 /* valid color */
-.input-field input[type=number].valid {
+.input-field input.valid {
     border-bottom: 1px solid #2e7d32;
     box-shadow: 0 1px 0 0 #000;
 }
 /* invalid color */
-.input-field input[type=number].invalid {
+.input-field input.invalid {
     border-bottom: 1px solid #b71c1c;
     box-shadow: 0 1px 0 0 #000;
 }

@@ -128,6 +128,8 @@
                 }).then(function() {
                     // nitificar a usuario
                     Materialize.toast("Se publicaron los nuevos numeros!", 5670);
+
+                    $("input[name=fecha]").removeClass("invalid").addClass("valid");
                 });
             }
             else {
@@ -135,6 +137,7 @@
                 Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
                 // errores de las fechas
                 if(!fechasValidas) {
+                    $("input[name=fecha]").removeClass("valid").addClass("invalid");
                     Materialize.toast("Las fechas no son validas.", 15431);
                 }
                 // errores de los numeros
