@@ -1,7 +1,10 @@
 <div class="col s12 m10 offset-m1 l8 offset-l2">
     <div class="card hoverable light-blue accent-4">
         <div class="card-content">
-            <div class="right-align">
+            <div class="col s10 m10 l10">
+                <img class="responsive-img" style="max-height: 110px" src="/img/nd.png">
+            </div>
+            <div class="col s2 m2 l2">
                 <!-- Dropdown Trigger -->
                 <a class='dropdown-button btn-flat btn-large' href='#' data-activates='dropdownMenu'>
                     <i class="material-icons">menu</i>
@@ -23,7 +26,7 @@
         </div>
         <div class="card-content white">
             <div id="_3dias" class="col s12 m12 l12">
-                <form id="_3dias">
+                <form id="form_3dias">
                     <div class="row">
                         <div class="input-field col s2 m2 l2">
                             <label>Desde: </label>
@@ -55,7 +58,55 @@
                 </form>
             </div>
             <div id="_base_dia" class="col s12 m12 l12">
-                KLK BASE DEL DIA
+                <form id="form_base_dia">
+                    <div class="row tiny">
+                        <div class="input-field col s2 m2 l2">
+                            <label>Desde: </label>
+                        </div>
+                        <div class="input-field col s4 m4 l4">
+                            <input type="date" name="fecha" class="validate">
+                        </div>
+                        <div class="input-field col s2 m2 l2">
+                            <label>Hasta: </label>
+                        </div>
+                        <div class="input-field col s4 m4 l4">
+                            <input type="date" name="fecha" class="validate">
+                        </div>
+                    </div>            
+                    <div class="row tiny">
+                        <div class="input-field col s2 offset-s3 m2 offset-m3 l2 offset-l3">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s2 m2 l2">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s2 m2 l2">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                    </div>              
+                    <div class="row tiny">
+                        <div class="input-field col s2 offset-s4 m2 offset-m4 l2 offset-l4">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s2 m2 l2">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                    </div>     
+                    <div class="row tiny">
+                        <div class="input-field col s3 m3 l3">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s3 m3 l3">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s3 m3 l3">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                        <div class="input-field col s3 m3 l3">
+                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="card-content white">
@@ -82,14 +133,14 @@
 
         function submitNumeros3Dias() {
             // obtener valor de todos los inputs relevantes
-            var ifechas = $("form#_3dias input[name=fecha]");
+            var ifechas = $("form#form_3dias input[name=fecha]");
             var fechas = {
                 inicio: ifechas.get(0).value,
                 fin: ifechas.get(1).value
             };
-            var inumeros = $("form#_3dias input[type=number]");
-            var numeros = [inumeros.get(0).value * 1,inumeros.get(1).value * 1,
-                           inumeros.get(2).value * 1,inumeros.get(3).value * 1];
+            var inumeros = $("form#form_3dias input[type=number]");
+            var numeros = [inumeros.get(0).value,inumeros.get(1).value,
+                           inumeros.get(2).value,inumeros.get(3).value];
 
             // validar y transformar fechas a formato user friendly
             var fechasValidas = true;
