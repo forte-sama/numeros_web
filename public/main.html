@@ -120,6 +120,15 @@
         </div>
     </div>
 </div>
+        
+<div id="success_modal" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h3 class="green-text text-darken-3"><b>Publicacion finalizada!</b></h3>
+        <h5 class="green-text text-darken-3">En breve tus usuarios van a ser notificados</h5>
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>
 
 <script>
     moment().locale("es");
@@ -133,14 +142,14 @@
 
         function submitNumeros3Dias() {
             // obtener valor de todos los inputs relevantes
-            var ifechas = $("form#form_3dias input[name=fecha]");
+            var ifechas = $("form#_3dias input[name=fecha]");
             var fechas = {
                 inicio: ifechas.get(0).value,
                 fin: ifechas.get(1).value
             };
-            var inumeros = $("form#form_3dias input[type=number]");
-            var numeros = [inumeros.get(0).value,inumeros.get(1).value,
-                           inumeros.get(2).value,inumeros.get(3).value];
+            var inumeros = $("form#_3dias input[type=number]");
+            var numeros = [inumeros.get(0).value * 1,inumeros.get(1).value * 1,
+                           inumeros.get(2).value * 1,inumeros.get(3).value * 1];
 
             // validar y transformar fechas a formato user friendly
             var fechasValidas = true;
@@ -148,8 +157,8 @@
             fechasValidas     = moment(fechas.inicio).isBefore(moment(fechas.fin));
             
             if(fechasValidas) {
-                fechas.inicio = moment(fechas.inicio).format("dddd D, MMMM YYYY");
-                fechas.fin    = moment(fechas.fin).format("dddd D, MMMM YYYY");
+                fechas.inicio = moment(fechas.inicio).format("D-MM-YYYY");
+                fechas.fin    = moment(fechas.fin).format("D-MM-YYYY");
             }
 
             // validar numeros
@@ -177,8 +186,10 @@
                     hasta: fechas.fin,
                     numeros: numeros
                 }).then(function() {
-                    // nitificar a usuario
-                    Materialize.toast("Se publicaron los nuevos numeros!", 5670);
+                    // notificar a usuario
+                    $("#success_modal").modal("open");
+
+                    $("input[name=fecha]").removeClass("invalid").addClass("valid");
                 });
             }
             else {
@@ -186,6 +197,7 @@
                 Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
                 // errores de las fechas
                 if(!fechasValidas) {
+                    $("input[name=fecha]").removeClass("valid").addClass("invalid");
                     Materialize.toast("Las fechas no son validas.", 15431);
                 }
                 // errores de los numeros
@@ -245,6 +257,9 @@
         
         // activar tabs
         $("ul.tabs").tabs();
+
+        // activar modals
+        $('.modal').modal();
 
         // activar boton de cierre de sesion
         $("#signout").click(function(e) {
