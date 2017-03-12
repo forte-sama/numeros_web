@@ -18,9 +18,10 @@
             </div>
         </div>
         <div class="card-tabs">
-            <ul class="tabs tabs-fixed-width light-blue accent-4">
+            <ul class="tabs light-blue accent-4">
                 <li class="tab"><a id="tab_3dias" href="#_3dias" class="active white-text">Numeros por 3 dias</a></li>
                 <li class="tab"><a id="tab_base_dia" href="#_base_dia" class="white-text">Base del dia</a></li>
+                <li class="tab"><a id="tab_link_video" href="#_link_video" class="white-text">Video</a></li>
                 <div class="indicator black" style="z-index:1"></div>
             </ul>
         </div>
@@ -57,6 +58,18 @@
                     </div>
                 </form>
             </div>
+            <div id="_link_video" class="col s12 m12 l12">
+                <form id="form_3dias">
+                    <div class="row">
+                        <div class="input-field col s2 m2 l2">
+                            <label>Link: </label>
+                        </div>
+                        <div class="input-field col s10 m10 l10">
+                            <input type="text" name="fecha">
+                        </div>
+                    </div>   
+                </form>         
+            </div>
             <div id="_base_dia" class="col s12 m12 l12">
                 <form id="form_base_dia">
                     <div class="row tiny">
@@ -64,46 +77,62 @@
                             <label>Desde: </label>
                         </div>
                         <div class="input-field col s4 m4 l4">
-                            <input type="date" name="fecha" class="validate">
+                            <input type="date" name="fecha_base_dia" class="validate">
                         </div>
                         <div class="input-field col s2 m2 l2">
                             <label>Hasta: </label>
                         </div>
                         <div class="input-field col s4 m4 l4">
-                            <input type="date" name="fecha" class="validate">
+                            <input type="date" name="fecha_base_dia" class="validate">
                         </div>
                     </div>            
                     <div class="row tiny">
                         <div class="input-field col s2 offset-s3 m2 offset-m3 l2 offset-l3">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                            <input type="number" name="piramide_base_dia" class="validate" min="0" max="99">
                         </div>
                         <div class="input-field col s2 m2 l2">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                            <input type="number" name="piramide_base_dia" class="validate" min="0" max="99">
                         </div>
                         <div class="input-field col s2 m2 l2">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                            <input type="number" name="piramide_base_dia" class="validate" min="0" max="99">
                         </div>
                     </div>              
                     <div class="row tiny">
                         <div class="input-field col s2 offset-s4 m2 offset-m4 l2 offset-l4">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                            <input type="number" name="piramide_base_dia" class="validate" min="0" max="99">
                         </div>
                         <div class="input-field col s2 m2 l2">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                            <input type="number" name="piramide_base_dia" class="validate" min="0" max="99">
                         </div>
                     </div>     
                     <div class="row tiny">
-                        <div class="input-field col s3 m3 l3">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        <div class="input-field">
+                            <input type="number" name="numero_virado" class="validate col s2 m2 l2" min="0" max="99">
+                            <span class="col s1 m1 l1">
+                                <input type="checkbox" id="virado1" name="virado_base_dia" />
+                                <label for="virado1"></label>
+                            </span>
                         </div>
-                        <div class="input-field col s3 m3 l3">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        <div class="input-field">
+                            <input type="number" name="numero_virado" class="validate col s2 m2 l2" min="0" max="99">
+                            <span class="col s1 m1 l1">
+                                <input type="checkbox" id="virado2" name="virado_base_dia" />
+                                <label for="virado2"></label>
+                            </span>
                         </div>
-                        <div class="input-field col s3 m3 l3">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        <div class="input-field">
+                            <input type="number" name="numero_virado" class="validate col s2 m2 l2" min="0" max="99">
+                            <span class="col s1 m1 l1">
+                                <input type="checkbox" id="virado3" name="virado_base_dia" />
+                                <label for="virado3"></label>
+                            </span>
                         </div>
-                        <div class="input-field col s3 m3 l3">
-                            <input type="number" name="numero_3dia" class="validate" min="0" max="99">
+                        <div class="input-field">
+                            <input type="number" name="numero_virado" class="validate col s2 m2 l2" min="0" max="99">
+                            <span class="col s1 m1 l1">
+                                <input type="checkbox" id="virado4" name="virado_base_dia" />
+                                <label for="virado4"></label>
+                            </span>
                         </div>
                     </div>
                 </form>
@@ -129,143 +158,4 @@
     <div class="modal-footer">
     </div>
 </div>
-
-<script>
-    moment().locale("es");
-    var current = "tab_3dias";
-
-    $(document).ready(function() {
-        const db = firebase.database();
-
-        // boton para publicar
-        const btn_publish = $("#btn_publish");
-
-        function submitNumeros3Dias() {
-            // obtener valor de todos los inputs relevantes
-            var ifechas = $("form#_3dias input[name=fecha]");
-            var fechas = {
-                inicio: ifechas.get(0).value,
-                fin: ifechas.get(1).value
-            };
-            var inumeros = $("form#_3dias input[type=number]");
-            var numeros = [inumeros.get(0).value * 1,inumeros.get(1).value * 1,
-                           inumeros.get(2).value * 1,inumeros.get(3).value * 1];
-
-            // validar y transformar fechas a formato user friendly
-            var fechasValidas = true;
-            // fechas seran validas cuando la inicial sea antes que la final, y ambas sean fechas validas
-            fechasValidas     = moment(fechas.inicio).isBefore(moment(fechas.fin));
-            
-            if(fechasValidas) {
-                fechas.inicio = moment(fechas.inicio).format("D-MM-YYYY");
-                fechas.fin    = moment(fechas.fin).format("D-MM-YYYY");
-            }
-
-            // validar numeros
-            var numerosValidos = true;
-            var arregloNumerosValidos = numeros.filter((n) => { return n >= 0 && n <= 99; });
-            var todosEstanEnRango = arregloNumerosValidos.length === numeros.length;
-            var conteoDeOcurrencias = [];
-            numeros.forEach((x) => {
-                if(conteoDeOcurrencias[x]) {
-                    conteoDeOcurrencias[x]++;
-                }
-                else {
-                    conteoDeOcurrencias[x] = 1;
-                }
-            });
-            var numerosSeRepiten = conteoDeOcurrencias.find((x) => { return x > 1; }) != undefined;
-            // numeros seran validos cuando todos esten en el rango jugable y no hayan repetidos
-            numerosValidos = todosEstanEnRango && !numerosSeRepiten;
-
-            // subirlos
-            if(fechasValidas && numerosValidos) {
-                // subir nuevos datos a db
-                db.ref("/_3dias").set({
-                    desde: fechas.inicio,
-                    hasta: fechas.fin,
-                    numeros: numeros
-                }).then(function() {
-                    // notificar a usuario
-                    $("#success_modal").modal("open");
-
-                    $("input[name=fecha]").removeClass("invalid").addClass("valid");
-                });
-            }
-            else {
-                // mostrar errores
-                Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
-                // errores de las fechas
-                if(!fechasValidas) {
-                    $("input[name=fecha]").removeClass("valid").addClass("invalid");
-                    Materialize.toast("Las fechas no son validas.", 15431);
-                }
-                // errores de los numeros
-                if(!numerosValidos) {
-                    if(!todosEstanEnRango) {
-                        Materialize.toast("Algunos numeros se pasan del rango jugable.", 15431);                    
-                    }
-                    if(numerosSeRepiten) {
-                        Materialize.toast("Algunos numeros se repiten. (Campo vacio es 00)", 15431);                    
-                    }
-                }                
-            }
-        }
-
-        function submitBaseDelDia() {
-            // obtener valor de todos los inputs relevantes
-            // validarlos
-                // validar fechas
-                // validar numeros
-            // subirlos
-        }
-
-        btn_publish.click(function(e) {
-            e.preventDefault();
-            
-            if(current === "tab_3dias") {
-                submitNumeros3Dias();
-            }
-            else if(current === "tab_base_dia") {
-                submitBaseDelDia();
-            }
-        });
-
-        // cambiar valor de tab actual siempre
-        function changeCurrentTab(value) {
-            current = value;
-
-            if (current === "tab_3dias") {
-                btn_publish.text("Publicar numeros 3 dias");
-            }
-            else if (current === "tab_base_dia") {
-                btn_publish.text("Publicar base del dia");
-            }
-        }
-        $("li.tab a").click(function(e) {
-            var newValue = $(this).attr("id");
-            changeCurrentTab(newValue);
-        });
-        
-        // corroborar tab actual
-        changeCurrentTab($("li.tab a.active").attr("id"));
-
-        // activar dropdowns
-        $('.dropdown-button').dropdown({
-            constrainWidth: true
-        });
-        
-        // activar tabs
-        $("ul.tabs").tabs();
-
-        // activar modals
-        $('.modal').modal();
-
-        // activar boton de cierre de sesion
-        $("#signout").click(function(e) {
-            e.preventDefault();
-
-            firebase.auth().signOut();
-        });
-    });
-</script>
+<script src="js/main.js"></script>
