@@ -8,8 +8,12 @@ $(document).ready(function() {
     // boton para publicar
     const btn_publish = $("#btn_publish");
 
-    function validarArregloNumeros(numeros) {
-        var arregloNumerosValidos = numeros.filter((n) => { return n >= 0 && n <= 99; });
+    function validarArregloNumeros(data) {
+        var numeros = data.numbers;
+        var arregloNumerosValidos = numeros.filter((n) => { 
+            if(data.oneDigitOnly) return n >= 0 && n < 10;
+            else return n >= 0 && n <= 99;
+        });
         var todosEstanEnRango = arregloNumerosValidos.length === numeros.length;
         var conteoDeOcurrencias = [];
         numeros.forEach((x) => {
@@ -22,7 +26,8 @@ $(document).ready(function() {
         });
         var numerosSeRepiten = conteoDeOcurrencias.find((x) => { return x > 1; }) != undefined;
         // numeros seran validos cuando todos esten en el rango jugable y no hayan repetidos
-        return (todosEstanEnRango && !numerosSeRepiten);
+        if(data.repetitions) return todosEstanEnRango;
+        else return (todosEstanEnRango && !numerosSeRepiten);
     }
 
     function submitNumeros3Dias() {
@@ -47,7 +52,11 @@ $(document).ready(function() {
         }
 
         // validar numeros
-        var numerosValidos = validarArregloNumeros(numeros);
+        var numerosValidos = validarArregloNumeros({
+            numbers: numeros, 
+            repetitions: true,
+            oneDigitOnly: false
+        });
 
         // subirlos
         if(fechasValidas && numerosValidos) {
@@ -102,8 +111,16 @@ $(document).ready(function() {
             fechas.fin    = moment(fechas.fin).format("D-MM-YYYY");
         }
         // validar numeros
-        var numerosPiramideValidos = validarArregloNumeros(numeros_piramide);
-        var numerosViradosValidos  = validarArregloNumeros(numeros_virados);
+        var numerosPiramideValidos = validarArregloNumeros({
+            numbers: numeros_piramide, 
+            repetitions: true,
+            oneDigitOnly: true
+        });
+        var numerosViradosValidos  = validarArregloNumeros({
+            numbers: numeros_virados, 
+            repetitions: true,
+            oneDigitOnly: true
+        });
         var numerosValidos = (numerosPiramideValidos && numerosViradosValidos);
 
         // subirlos
