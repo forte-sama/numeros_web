@@ -161,7 +161,40 @@ $(document).ready(function() {
     }
 
     function submitLinkVideo() {
-        console.log("Link del video");
+        var linkValido = true;
+
+        var raw_link = $("form#form_link input[name=link_input]").get(0).value;
+        // separar 
+        var link_querystring_params = raw_link.split("&");
+        if(link_querystring_params.length < 2) {
+            link_querystring_params = raw_link.split("?");
+        }
+        var playlist = link_querystring_params.find((str) => { return str.includes("list="); });
+
+        if(!playlist) {
+            linkValido = false;
+        }
+        // console.log(raw_link);
+        // console.log(link_querystring_params);
+        // console.log(playlist);
+        // console.log(playlist.substring(5));
+
+        // subirlos
+        if(linkValido) {
+            var playlist_id = playlist.substring(5);
+            // subir nuevos datos a db
+            db.ref("/video/url").set(playlist_id).then(function() {
+                // notificar a usuario
+                $("#success_modal").modal("open");
+
+                $("input[name=fecha]").removeClass("invalid");
+            });
+        }
+        else {
+            // mostrar errores
+            Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
+                Materialize.toast("Revisar que el enlace tenga la porcion 'list=XXXX'. XXXX es el id del playlist.", 15431);                    
+        }
     }
 
     btn_publish.click(function(e) {
