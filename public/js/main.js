@@ -27,12 +27,12 @@ $(document).ready(function() {
 
     function submitNumeros3Dias() {
         // obtener valor de todos los inputs relevantes
-        var ifechas = $("form#_3dias input[name=fecha]");
+        var ifechas = $("form#form_3dias input[name=fecha_3dias]");
         var fechas = {
             inicio: ifechas.get(0).value,
             fin: ifechas.get(1).value
         };
-        var inumeros = $("form#_3dias input[type=number]");
+        var inumeros = $("form#form_3dias input[type=number]");
         var numeros = [inumeros.get(0).value,inumeros.get(1).value,
                         inumeros.get(2).value,inumeros.get(3).value];
 
@@ -96,10 +96,6 @@ $(document).ready(function() {
         var fechasValidas = true;
         // fechas seran validas cuando la inicial sea antes que la final, y ambas sean fechas validas
         fechasValidas = moment(fechas.inicio).isBefore(moment(fechas.fin));
-        
-        console.log(numeros_piramide);
-        console.log(numeros_virados);
-        console.log(fechas);
 
         if(fechasValidas) {
             fechas.inicio = moment(fechas.inicio).format("D-MM-YYYY");
