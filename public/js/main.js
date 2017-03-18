@@ -74,15 +74,15 @@ $(document).ready(function() {
         }
         else {
             // mostrar errores
-            Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
+            Materialize.toast("Favor de verificar e intentar de nuevo.", 2000);
             // errores de las fechas
             if(!fechasValidas) {
                 $("input[name=fecha]").removeClass("valid").addClass("invalid");
-                Materialize.toast("Las fechas no son validas.", 15431);
+                Materialize.toast("Las fechas no son validas.", 2000);
             }
             // errores de los numeros
             if(!numerosValidos) {
-                Materialize.toast("Revisar numeros, hay algo incorrecto", 15431);                    
+                Materialize.toast("Revisar numeros, hay algo incorrecto", 2000);                    
             }                
         }
     }
@@ -119,7 +119,7 @@ $(document).ready(function() {
         var numerosViradosValidos  = validarArregloNumeros({
             numbers: numeros_virados, 
             repetitions: true,
-            oneDigitOnly: true
+            oneDigitOnly: false
         });
         var numerosValidos = (numerosPiramideValidos && numerosViradosValidos);
 
@@ -129,7 +129,7 @@ $(document).ready(function() {
             var check_virados = $("form#form_base_dia input[name=virado_base_dia]");
             for(var i=0; i<4; i++) {
                 if(check_virados.get(i).checked) {
-                    numeros_virados[i] = numeros_virados[i] + "V";
+                    numeros_virados[i] = numeros_virados[i] + "v";
                 }
             }
             // subir nuevos datos a db
@@ -147,15 +147,15 @@ $(document).ready(function() {
         }
         else {
             // mostrar errores
-            Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
+            Materialize.toast("Favor de verificar e intentar de nuevo.", 2000);
             // errores de las fechas
             if(!fechasValidas) {
                 $("input[name=fecha]").removeClass("valid").addClass("invalid");
-                Materialize.toast("Las fechas no son validas.", 15431);
+                Materialize.toast("Las fechas no son validas.", 2000);
             }
             // errores de los numeros
             if(!numerosValidos) {
-                Materialize.toast("Revisar numeros de la base del dia, hay algun dato incorrecto.", 15431);                    
+                Materialize.toast("Revisar numeros de la base del dia, hay algun dato incorrecto.", 2000);                    
             }                
         }
     }
@@ -192,8 +192,8 @@ $(document).ready(function() {
         }
         else {
             // mostrar errores
-            Materialize.toast("Favor de verificar e intentar de nuevo.", 15431);
-                Materialize.toast("Revisar que el enlace tenga la porcion 'list=XXXX'. XXXX es el id del playlist.", 15431);                    
+            Materialize.toast("Favor de verificar e intentar de nuevo.", 2000);
+                Materialize.toast("Revisar que el enlace tenga la porcion 'list=XXXX'. XXXX es el id del playlist.", 2000);                    
         }
     }
 
